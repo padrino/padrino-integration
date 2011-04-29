@@ -11,6 +11,7 @@ class TestAdmin < Test::Unit::TestCase
     ENV['BUNDLE_GEMFILE'] = nil
     padrino(:stop, "--chdir=#{@apptmp}")
     `rm -rf #{File.expand_path("../../tmp", __FILE__)}`
+    puts "\n\n"
   end
 
   %w(haml).each do |engine|
@@ -77,7 +78,6 @@ class TestAdmin < Test::Unit::TestCase
         # Logout
         click_button "Logout"
         assert_have_selector "h2", :content => "Login Box"
-        puts "\n\n"
       end
     end
   end
