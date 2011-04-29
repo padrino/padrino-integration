@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../helper_isolated')
+require File.expand_path(File.dirname(__FILE__) + '/../helper')
 
 class TestAdmin < Test::Unit::TestCase
 
@@ -16,6 +16,7 @@ class TestAdmin < Test::Unit::TestCase
   %w(haml).each do |engine|
     %w(datamapper activerecord sequel).each do |orm|
       should "generate an admin with #{orm} and #{engine}" do
+        puts "\n\nTesting with ORM '#{orm}' and engine '#{engine}'..."
         @apptmp = File.expand_path("../../tmp/#{orm}-#{engine}", __FILE__)
         out = padrino_gen(:project, "#{orm}-#{engine}", "-d=#{orm}", "-e=#{engine}", "--root=#{File.expand_path("#{@apptmp}/../")}", "--dev")
         assert_match /Applying '#{orm}'/i, out
@@ -34,6 +35,7 @@ class TestAdmin < Test::Unit::TestCase
         assert_match /server has been daemonized with pid/, out
         sleep 10 # Take the time to boot
         header "Host", "localhost" # this is for follow redirects
+        log "Visiting admin section..."
         visit "http://localhost:3000/admin"
         fill_in :email,    :with => "info@padrino.com"
         fill_in :password, :with => "sample"

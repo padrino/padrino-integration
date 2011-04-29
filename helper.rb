@@ -25,22 +25,31 @@ class Test::Unit::TestCase
   end
 
   def padrino(command, *args)
-    path = File.expand_path('../../../padrino-core/bin/padrino', __FILE__)
-    `#{Gem.ruby} #{path} #{command} #{args.join(" ")}`.strip
+    run_bin(padrino_folder('padrino-core/bin/padrino'), command, *args)
   end
 
   def padrino_gen(command, *args)
-    path = File.expand_path('../../../padrino-gen/bin/padrino-gen', __FILE__)
-    `#{Gem.ruby} #{path} #{command} #{args.join(" ")}`.strip
+    run_bin(padrino_folder('padrino-gen/bin/padrino-gen'), command, *args)
   end
 
-  def bundle(cmd, *args)
-    path = File.expand_path('../support/bundle', __FILE__)
-    `#{Gem.ruby} #{path} #{cmd} #{args.join(" ")}`.strip
+  def bundle(command, *args)
+    run_bin(File.expand_path('../support/bundle', __FILE__), command, *args)
+  end
+
+  def run_bin(bin_path, command, *args)
+    log "Executing #{File.basename(bin_path)} #{command} #{args.join(" ")}"
+    `#{Gem.ruby} #{bin_path} #{command} #{args.join(" ")}`.strip
   end
 
   def replace_seed(path)
     File.open("#{path}/db/seeds.rb", "w") { |f| f.puts "Account.create(:email => 'info@padrino.com', :password => 'sample', :password_confirmation => 'sample', :role => 'admin')" }
+  end
+
+  def log(message, options={})
+    options[:level] = 2 unless options[:level]
+    output_method = options[:inline] ? method(:print) : method(:puts)
+    prefix = " " * options[:level] unless options[:level].nil? || options[:level] == 1
+    output_method.call(prefix + message)
   end
 
   def migrate(orm)
@@ -50,6 +59,12 @@ class Test::Unit::TestCase
       when :squel        then "sq:migrate"
       else ""
     end
+  end
+
+  PADRINO_ROOT = ENV["PADRINO_PATH"] unless defined?(PADRINO_ROOT)
+  # padrino_folder("padrino-core/bin/padrino") => "/full/path/to/padrino/padrino-core/..."
+  def padrino_folder(path)
+    File.expand_path(File.join(PADRINO_ROOT, path), __FILE__)
   end
 end
 
