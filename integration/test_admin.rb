@@ -16,7 +16,7 @@ class TestAdmin < Test::Unit::TestCase
   %w(haml).each do |engine|
     %w(datamapper activerecord sequel).each do |orm|
       should "generate an admin with #{orm} and #{engine}" do
-        puts "\n\nTesting with ORM '#{orm}' and engine '#{engine}'..."
+        puts "Testing with ORM '#{orm}' and engine '#{engine}'..."
         @apptmp = File.expand_path("../../tmp/#{orm}-#{engine}", __FILE__)
         out = padrino_gen(:project, "#{orm}-#{engine}", "-d=#{orm}", "-e=#{engine}", "--root=#{File.expand_path("#{@apptmp}/../")}", "--dev")
         assert_match /Applying '#{orm}'/i, out
@@ -77,6 +77,7 @@ class TestAdmin < Test::Unit::TestCase
         # Logout
         click_button "Logout"
         assert_have_selector "h2", :content => "Login Box"
+        puts "\n\n"
       end
     end
   end
