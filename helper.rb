@@ -42,7 +42,14 @@ class Test::Unit::TestCase
   end
 
   def replace_seed(path)
-    File.open("#{path}/db/seeds.rb", "w") { |f| f.puts "Account.create(:email => 'info@padrino.com', :password => 'sample', :password_confirmation => 'sample', :role => 'admin')" }
+    File.open("#{path}/db/seeds.rb", "w") do |f| f.puts <<-RUBY
+        Account.create(:email => 'info@padrino.com',
+                       :password => 'sample',
+                       :password_confirmation => 'sample',
+                       :role => 'admin')
+        puts "Ok"
+      RUBY
+    end
   end
 
   def log(message, options={})
@@ -56,7 +63,7 @@ class Test::Unit::TestCase
     case orm.to_sym
       when :activerecord then "ar:migrate"
       when :datamapper   then "dm:migrate"
-      when :squel        then "sq:migrate"
+      when :sequel       then "sq:migrate:auto"
       else ""
     end
   end
