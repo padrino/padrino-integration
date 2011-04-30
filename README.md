@@ -19,6 +19,6 @@ Export `PADRINO_PATH` environment variable specifying the path to the "padrino-f
 
 Run the integration test suite:
 
- rake test
+   $ rake test
 
-and that's it, before a release they should pass!
+and that will output the results of comprehensive integration tests, before a release they should always pass! We will eventually get this set
