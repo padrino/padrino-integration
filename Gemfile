@@ -16,7 +16,9 @@ group :apps do
   gem 'data_mapper'
   gem 'bson_ext'
   gem 'mongoid'
-  gem 'SystemTimer'
+  platforms :mri_18
+    gem 'SystemTimer'
+  end
   gem 'mongo_mapper'
   gem 'mongomatic'
   gem 'json'
