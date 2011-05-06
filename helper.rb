@@ -6,6 +6,7 @@ require 'nokogiri'
 require 'rack'
 require 'shoulda'
 require 'ruby-debug'
+require 'date'
 
 class Test::Unit::TestCase
   include Webrat::Methods

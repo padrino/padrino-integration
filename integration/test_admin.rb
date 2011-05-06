@@ -23,10 +23,8 @@ class TestAdmin < Test::Unit::TestCase
         assert_match /Applying '#{orm}'/i, out
         assert_match /Applying '#{engine}'/i, out
         ENV['BUNDLE_GEMFILE'] = "#{@apptmp}/Gemfile"
-        # This is more fast, but we need to check that every thing works fine with latest versions.
-        # if bundle(:check) !~ /The Gemfile's dependencies are satisfied/i
-        out = bundle(:install)
-        assert_match /Your bundle is complete/, out
+        # out = bundle(:install)
+        # assert_match /Your bundle is complete/, out
         out = padrino_gen(:admin, "--root=#{@apptmp}")
         assert_match /The admin panel has been mounted/, out
         replace_seed(@apptmp)
@@ -34,12 +32,16 @@ class TestAdmin < Test::Unit::TestCase
         assert_match /Rake/i, out
         out = padrino(:rake, "seed", "--chdir=#{@apptmp}")
         assert_match /Ok/i, out
-        out = padrino(:start, "-d", "--chdir=#{@apptmp}")
+        port = 3000
+        while `nc -z -w 1 localhost #{port}` =~ /succeeded/
+          port += 10
+        end
+        out = padrino(:start, "-d", "--chdir=#{@apptmp}", "-p #{port}")
         assert_match /server has been daemonized with pid/, out
         sleep 10 # Take the time to boot
         header "Host", "localhost" # this is for follow redirects
         log "Visiting admin section..."
-        visit "http://localhost:3000/admin"
+        visit "http://localhost:#{port}/admin"
         fill_in :email,    :with => "info@padrino.com"
         fill_in :password, :with => "sample"
         click_button "Sign In"
