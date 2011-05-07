@@ -7,6 +7,8 @@ require 'rack'
 require 'shoulda'
 require 'ruby-debug'
 require 'date'
+require 'mongo_mapper'
+require 'couchrest'
 
 class Test::Unit::TestCase
   include Webrat::Methods

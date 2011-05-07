@@ -15,7 +15,7 @@ class TestAdmin < Test::Unit::TestCase
   end
 
   %w(haml erb slim).each do |engine|
-    %w(sequel activerecord datamapper).each do |orm|
+    %w(couchrest mongomapper mongoid activerecord datamapper sequel).each do |orm|
       should "generate an admin with #{orm} and #{engine}" do
         puts "Testing with ORM '#{orm}' and engine '#{engine}'..."
         @apptmp = File.expand_path("../../tmp/#{orm}-#{engine}", __FILE__)
@@ -23,13 +23,19 @@ class TestAdmin < Test::Unit::TestCase
         assert_match /Applying '#{orm}'/i, out
         assert_match /Applying '#{engine}'/i, out
         ENV['BUNDLE_GEMFILE'] = "#{@apptmp}/Gemfile"
+        # Clean up old dbs
+        MongoMapper.database = "#{orm}_#{engine}_development"
+        MongoMapper.database.collections.select { |c| c.name !~ /system/ }.each(&:drop)
+        CouchRest.database!("#{orm}_#{engine}_development").delete!
         # out = bundle(:install)
         # assert_match /Your bundle is complete/, out
         out = padrino_gen(:admin, "--root=#{@apptmp}")
         assert_match /The admin panel has been mounted/, out
+        if orm !~ /mongo|couch/
+          out = padrino(:rake, migrate(orm), "--chdir=#{@apptmp}")
+          assert_match /Rake/i, out
+        end
         replace_seed(@apptmp)
-        out = padrino(:rake, migrate(orm), "--chdir=#{@apptmp}")
-        assert_match /Rake/i, out
         out = padrino(:rake, "seed", "--chdir=#{@apptmp}")
         assert_match /Ok/i, out
         port = 3000
@@ -38,7 +44,7 @@ class TestAdmin < Test::Unit::TestCase
         end
         out = padrino(:start, "-d", "--chdir=#{@apptmp}", "-p #{port}")
         assert_match /server has been daemonized with pid/, out
-        sleep 10 # Take the time to boot
+        sleep 30 # Take the time to boot
         header "Host", "localhost" # this is for follow redirects
         log "Visiting admin section..."
         visit "http://localhost:#{port}/admin"
