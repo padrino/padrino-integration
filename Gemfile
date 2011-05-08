@@ -25,6 +25,7 @@ group :apps do
   gem 'ohm'
   gem 'ohm-contrib'
   gem 'sequel'
+  gem 'padrino', :path => ENV['PADRINO_PATH']
 end
 
 platforms :mri_18 do
