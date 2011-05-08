@@ -6,6 +6,7 @@ gem "shoulda"
 
 group :apps do
   gem 'rake'
+  gem 'thor'
   gem 'rack-flash'
   gem 'thin'
   gem 'mocha'
@@ -25,6 +26,9 @@ group :apps do
   gem 'ohm'
   gem 'ohm-contrib'
   gem 'sequel'
+  gem 'haml'
+  gem 'erubis', '~>2.6.6' # couchrest require that
+  gem 'slim'
   gem 'padrino', :path => ENV['PADRINO_PATH']
 end
 
