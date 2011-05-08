@@ -15,7 +15,7 @@ group :apps do
   gem 'json_pure'
   gem 'data_mapper'
   gem 'bson_ext'
-  gem 'mongoid'
+  gem 'mongoid', '2.0.0'
   platforms :mri_18 do
     gem 'SystemTimer'
   end
