@@ -15,7 +15,7 @@ class TestAdmin < Test::Unit::TestCase
   end
 
   %w(haml erb slim).each do |engine|
-    %w(couchrest mongomapper mongoid activerecord datamapper sequel).each do |orm|
+    %w(couchrest).each do |orm|
       should "generate an admin with #{orm} and #{engine}" do
         puts "Testing with ORM '#{orm}' and engine '#{engine}'..."
         @apptmp = File.expand_path("../../tmp/#{orm}-#{engine}", __FILE__)

@@ -27,7 +27,8 @@ group :apps do
   gem 'ohm-contrib'
   gem 'sequel'
   gem 'haml'
-  gem 'erubis', '~>2.6.6' # couchrest require that
+  gem 'erubis', '~> 2.6.6' # couchrest require that
+  gem 'mime-types', '1.15' # couchrest require that
   gem 'slim'
   gem 'padrino', :path => ENV['PADRINO_PATH']
 end
