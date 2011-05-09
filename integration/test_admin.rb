@@ -22,13 +22,13 @@ class TestAdmin < Test::Unit::TestCase
         out = padrino_gen(:project, "#{orm}-#{engine}", "-d=#{orm}", "-e=#{engine}", "--root=#{File.expand_path("#{@apptmp}/../")}", "--dev")
         assert_match /Applying '#{orm}'/i, out
         assert_match /Applying '#{engine}'/i, out
-        ENV['BUNDLE_GEMFILE'] = "#{@apptmp}/Gemfile"
+        # ENV['BUNDLE_GEMFILE'] = "#{@apptmp}/Gemfile"
         # Clean up old dbs
         MongoMapper.database = "#{orm}_#{engine}_development"
         MongoMapper.database.collections.select { |c| c.name !~ /system/ }.each(&:drop)
         CouchRest.database!("#{orm}_#{engine}_development").delete!
-        out = bundle(:install)
-        assert_match /Your bundle is complete/, out
+        # out = bundle(:install)
+        # assert_match /Your bundle is complete/, out
         out = padrino_gen(:admin, "--root=#{@apptmp}")
         assert_match /The admin panel has been mounted/, out
         if orm !~ /mongo|couch/
