@@ -15,7 +15,8 @@ class TestAdmin < Test::Unit::TestCase
   end
 
   %w(haml erb slim).each do |engine|
-    %w(couchrest).each do |orm|
+    %w(couchrest mongomapper mongoid activerecord datamapper sequel).each do |orm|
+      next if engine == "erb" && orm == "couchrest" # couchrest_models depends from erubis 2.6 (why?) padrino need 2.7!
       should "generate an admin with #{orm} and #{engine}" do
         puts "Testing with ORM '#{orm}' and engine '#{engine}'..."
         @apptmp = File.expand_path("../../tmp/#{orm}-#{engine}", __FILE__)
