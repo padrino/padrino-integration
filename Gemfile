@@ -35,7 +35,7 @@ group :apps do
   if ENV['PADRINO_PATH']
     gem 'padrino', :path => ENV['PADRINO_PATH']
   else
-    gem 'padrino', :git => "git://github.com/padrino/padrino-integration.git"
+    gem 'padrino', :git => "git://github.com/padrino/padrino-framework.git"
   end
 end
 
