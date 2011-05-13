@@ -48,6 +48,14 @@ module Helpers
     sleep 5
   end
 
+  def get_free_port
+    port = 3000
+    while `nc -z -w 1 localhost #{port}` =~ /succeeded/
+      port += 10
+    end
+    port
+  end
+
   def migrate(orm)
     case orm.to_sym
       when :activerecord then "ar:migrate"

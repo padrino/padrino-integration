@@ -1,4 +1,4 @@
-require 'spec_helper'
+require File.expand_path('../../spec_helper.rb', __FILE__)
 
 describe "padrino" do
   %w(haml erb slim).each do |engine|
@@ -43,10 +43,7 @@ describe "padrino" do
           replace_seed(@apptmp)
           out = padrino(:rake, "seed", "--chdir=#{@apptmp}")
           out.should =~ /Ok/i
-          port = 3000
-          while `nc -z -w 1 localhost #{port}` =~ /succeeded/
-            port += 10
-          end
+          port = get_free_port
           out = padrino(:start, "-d", "--chdir=#{@apptmp}", "-p #{port}")
           out.should =~ /server has been daemonized with pid/
           wait_localhost(port)

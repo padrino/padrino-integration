@@ -1,4 +1,4 @@
-require 'spec_helper'
+require File.expand_path('../../spec_helper.rb', __FILE__)
 
 describe "single-apps" do
   before { kill_match("single-apps") }
@@ -13,7 +13,7 @@ describe "single-apps" do
   end
 
   def launch(app)
-    fork { `#{Gem.ruby} #{app_path(app)}` }
+    fork { `#{Gem.ruby} #{app_path(app)} #{get_free_port}` }
     wait_localhost
   end
 
