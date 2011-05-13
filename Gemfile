@@ -2,7 +2,8 @@ source :rubygems
 
 gem "mechanize"
 gem "webrat"
-gem "shoulda"
+gem "rspec"
+gem "shoulda-context"
 
 group :apps do
   gem 'rake'
@@ -27,7 +28,7 @@ group :apps do
   gem 'ohm-contrib'
   gem 'sequel'
   gem 'haml'
-  gem 'erubis', '~> 2.6.6' # couchrest require that
+  gem 'erubis'
   gem 'mime-types'
   gem 'slim'
   gem 'padrino', :path => ENV['PADRINO_PATH']
