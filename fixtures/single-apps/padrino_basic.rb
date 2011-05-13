@@ -11,7 +11,7 @@ class PadrinoBasic < Padrino::Application
   end
 end
 
-PadrinoBasic.run!(:port => 3000)
+PadrinoBasic.run!(:port => ARGV[0] || 3000)
 # or
 # Padrino.mount("PadrinoBasic").to("/")
 # Padrino.run!(:port => 3000) unless Padrino.loaded?

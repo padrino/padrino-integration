@@ -31,4 +31,4 @@ end
 Padrino.mount("complex_1_demo").to("/")
 Padrino.mount("complex_2_demo").to("/2")
 
-Padrino.run!
+Padrino.run!(:port => ARGV[0] || 3000)

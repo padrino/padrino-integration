@@ -13,4 +13,4 @@ class PadrinoApp1 < Padrino::Application
   end
 end
 
-PadrinoApp1.run!(:port => 3000)
+PadrinoApp1.run!(:port => ARGV[0] || 3000)

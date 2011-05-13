@@ -28,4 +28,4 @@ class MyApp < Sinatra::Application
   end
 end # MyApp
 
-MyApp.run!(:port => 3000)
+MyApp.run!(:port => ARGV[0] || 3000)
