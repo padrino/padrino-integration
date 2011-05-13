@@ -10,8 +10,6 @@ require 'mongo_mapper'
 require 'couchrest'
 require 'fileutils'
 
-ENV['PADRINO_PATH'] ||= "/src/padrino-framework"
-
 module Helpers
   def padrino(command, *args)
     run_bin(padrino_folder('padrino-core/bin/padrino'), command, *args)
@@ -60,7 +58,8 @@ module Helpers
   end
 
   def padrino_folder(path)
-    File.expand_path(File.join(ENV['PADRINO_PATH'], path), __FILE__)
+    @_padrino_path ||= File.expand_path(Bundler.load.specs.find{|s| s.name == "padrino" }.full_gem_path + '/..')
+    File.join(@_padrino_path, path)
   end
 
   def editing(file, buffer, match=nil, &block)

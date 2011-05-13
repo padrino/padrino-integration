@@ -31,7 +31,12 @@ group :apps do
   gem 'erubis'
   gem 'mime-types'
   gem 'slim'
-  gem 'padrino', :path => ENV['PADRINO_PATH']
+
+  if ENV['PADRINO_PATH']
+    gem 'padrino', :path => ENV['PADRINO_PATH']
+  else
+    gem 'padrino', :git => "git://github.com/padrino/padrino-integration.git"
+  end
 end
 
 platforms :mri_18 do

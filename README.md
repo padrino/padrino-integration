@@ -11,14 +11,8 @@ Clone and install dependencies:
     git clone https://github.com/padrino/padrino-integration
     bundle install
 
-Export `PADRINO_PATH` environment variable specifying the path to the "padrino-framework" source folder:
-
-    # ~/.profile
-    # set PADRINO_PATH in bash_profile
-    export PADRINO_PATH="/path/to/padrino/folder"
-
 Run the integration test suite:
 
-   $ rake test
+   $ rake spec
 
 and that will output the results of comprehensive integration tests, before a release they should always pass! We will eventually get this set
