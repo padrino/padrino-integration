@@ -1,4 +1,4 @@
-require File.expand_path('../../spec_helper.rb', __FILE__)
+require File.expand_path('../spec_helper.rb', __FILE__)
 
 describe "single-apps" do
   before { kill_match("single-apps") }
