@@ -107,6 +107,7 @@ end
 # Don't tell me why but on 1.9.2 happen this:
 #
 #   NameError Exception: uninitialized constant Sequel::Plugins::ValidationHelpers::ClassMethods
+#   # => true
 #   Sequel::Plugins::ValidationHelpers.const_defined?("ClassMethods")
 #
 # then I found:

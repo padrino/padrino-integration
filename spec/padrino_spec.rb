@@ -2,7 +2,7 @@ require File.expand_path('../spec_helper.rb', __FILE__)
 
 describe "padrino" do
   %w(slim erb haml).each do |engine|
-    %w(sequel datamapper activerecord mongoid mongomapper).each do |orm|
+    %w(mongomapper sequel datamapper activerecord mongoid).each do |orm|
       describe "project with #{orm} and #{engine}" do
         attr_reader :engine, :orm, :app, :tmp, :apptmp, :name
 
@@ -20,8 +20,8 @@ describe "padrino" do
         after :all do
           begin
             FileUtils.rm_rf(apptmp)
-            MongoMapper.database = "#{name}_development"
-            MongoMapper.database.collections.select { |c| c.name !~ /system/ }.each(&:drop)
+            conn = Mongo::Connection.new
+            conn.drop_database("#{name}_development")
             # CouchRest.database!("#{name}_development").delete!
           rescue Exception => e
             puts "#{e.class}: #{e.message}"
