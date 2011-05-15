@@ -1,14 +1,12 @@
-require 'rubygems'
-require 'rspec'
-require 'webrat'
-require 'mechanize'
-require 'nokogiri'
-require 'rack'
-require 'ruby-debug'
+require 'rubygems' unless defined?(Gem)
+require 'bundler'
 require 'date'
-require 'mongo_mapper'
-require 'couchrest'
 require 'fileutils'
+Bundler.setup
+Bundler.require(:default, :debug, :apps)
+
+# Setup globally Padrino logger
+Padrino::Logger::Config[:development][:stream] = :null
 
 module Helpers
   def padrino(command, *args)
@@ -38,24 +36,6 @@ module Helpers
     end
   end
 
-  def wait_localhost(port=3000)
-    timeout = 30
-    while `nc -z -w 1 localhost #{port}` !~ /succeeded/
-      timeout -= 1
-      sleep 1
-      break if timeout == 0
-    end
-    sleep 5
-  end
-
-  def get_free_port
-    port = 3000
-    while `nc -z -w 1 localhost #{port}` =~ /succeeded/
-      port += 10
-    end
-    port
-  end
-
   def migrate(orm)
     case orm.to_sym
       when :activerecord then "ar:migrate"
@@ -66,7 +46,7 @@ module Helpers
   end
 
   def padrino_folder(path)
-    @_padrino_path ||= File.expand_path(Bundler.load.specs.find{|s| s.name == "padrino" }.full_gem_path + '/..')
+    @_padrino_path ||= File.expand_path(Bundler.load.specs.find{ |s| s.name == "padrino" }.full_gem_path + '/..')
     File.join(@_padrino_path, path)
   end
 
@@ -80,11 +60,6 @@ module Helpers
     File.open(file, "w") { |f| f.puts buf_was }
   end
 
-  def kill_match(name)
-    pids = `ps -ef | grep -vE "^USER|grep|killmatch" | grep "#{name}" | awk '{print $2}'`.chomp.split("\n")
-    pids.each { |pid| `kill -9 #{pid}`  }
-  end
-
   def method_missing(name, *args, &block)
     if response && response.respond_to?(name)
       response.send(name, *args, &block)
@@ -94,37 +69,39 @@ module Helpers
   end
 end
 
+Webrat.configure { |config| config.mode = :rack }
+
 # No idea why we need this but without it response_code is not always recognized
 Webrat::Methods.delegate_to_session :response_code, :response_body
 
-# This is needed for webrat_steps.rb
-Webrat::Methods.delegate_to_session :response
-
-# More fast
-Mechanize.html_parser = Nokogiri::HTML
-
-Webrat.configure do |config|
-  config.mode = :mechanize
+RSpec.configure do |conf|
+  conf.include Rack::Test::Methods
+  conf.include Webrat::Methods
+  conf.include Webrat::Matchers
+  conf.include Helpers
 end
 
 module Webrat
-  class MechanizeAdapter
-    # Suppress warnings
-    def mechanize
-      @mechanize ||= Mechanize.new
-    end
-  end
-
+  # Disable logging
   module Logging
-    # Suppress logger
     def logger
       @logger = nil
     end
   end
+
+  # Follow redirects
+  class Session
+    def current_host
+      URI.parse(current_url).host || @custom_headers["Host"] || default_current_host
+    end
+
+    def default_current_host
+      adapter.class==Webrat::RackAdapter ? "example.org" : "www.example.com"
+    end
+  end
 end
 
-RSpec.configure do |conf|
-  conf.include Webrat::Methods
-  conf.include Webrat::Matchers
-  conf.include Helpers
+# Hack an annoying warnings
+def warn(text)
+  super(text) if text !~ /DataObjects::URI.new with arguments is deprecated/
 end

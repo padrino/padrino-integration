@@ -1,4 +1,3 @@
-require File.expand_path('../load_paths', __FILE__)
 require 'sinatra/base'
 require 'padrino-core/application/rendering'
 require 'haml'
@@ -10,7 +9,7 @@ require 'haml'
 #   http://localhost:3000
 #   http://localhost:3000/h1
 #
-class MyApp < Sinatra::Application
+class SinatraRendering < Sinatra::Application
   register Padrino::Rendering
   set :views, File.expand_path("../views", __FILE__)
   disable :logging
@@ -27,5 +26,3 @@ class MyApp < Sinatra::Application
     render "h1"
   end
 end # MyApp
-
-MyApp.run!(:port => ARGV[0] || 3000)

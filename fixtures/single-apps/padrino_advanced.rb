@@ -1,4 +1,3 @@
-require File.expand_path('../load_paths', __FILE__)
 require 'padrino-core'
 require 'haml'
 
@@ -13,4 +12,4 @@ class PadrinoApp1 < Padrino::Application
   end
 end
 
-PadrinoApp1.run!(:port => ARGV[0] || 3000)
+Padrino.mount(PadrinoApp1).to("/")

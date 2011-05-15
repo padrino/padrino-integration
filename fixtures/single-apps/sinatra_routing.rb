@@ -1,4 +1,3 @@
-require File.expand_path('../load_paths', __FILE__)
 require 'sinatra/base'
 require 'padrino-core/application/routing'
 
@@ -17,7 +16,7 @@ require 'padrino-core/application/routing'
 #   http://localhost:3000/bar.jsl
 #   http://localhost:3000/custom-route
 #
-class MyApp < Sinatra::Application
+class SinatraRouting < Sinatra::Application
   register Padrino::Routing
   disable :logging
 
@@ -37,5 +36,3 @@ class MyApp < Sinatra::Application
     "This is a custom route with #{params[:id]} as params[:id]"
   end
 end # MyApp
-
-MyApp.run!(:port => ARGV[0] || 3000)

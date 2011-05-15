@@ -1,36 +1,40 @@
 source :rubygems
 
-gem "mechanize"
 gem "webrat"
 gem "rspec"
-gem "shoulda-context"
+gem "rack-test", :require => 'rack/test'
 
 group :apps do
+  gem 'haml'
+  gem 'erubis', "~> 2.7.0"
+  gem 'slim'
+  gem 'bcrypt-ruby', :require => 'bcrypt'
   gem 'rake'
   gem 'thor'
-  gem 'rack-flash'
+  gem 'rack-flash', :require => 'rack/flash'
   gem 'thin'
   gem 'mocha'
   gem 'rr'
-  gem 'activerecord'
-  gem 'couchrest_model'
+  gem 'activerecord', :require => 'active_record'
+  gem 'sqlite3'
+  # For unkown reason the couchrest_model depends from railties wich depepends from actionpack wich load rails
+  # and a lot of unuseful stuff BUT needs erubis '2.6.6' wich is not compatible wth padrino/tilt/sinatra and the world
+  # gem 'couchrest_model'
   gem 'json_pure'
   gem 'data_mapper'
-  gem 'bson_ext'
+  gem 'dm-sqlite-adapter'
+  gem 'bson_ext', :require => 'mongo'
   gem 'mongoid', '2.0.0'
   platforms :mri_18 do
-    gem 'SystemTimer'
+    gem 'SystemTimer', :require => 'system_timer'
   end
   gem 'mongo_mapper'
   gem 'mongomatic'
   gem 'json'
   gem 'ohm'
-  gem 'ohm-contrib'
+  gem 'ohm-contrib', :require => 'ohm/contrib'
   gem 'sequel'
-  gem 'haml'
-  gem 'erubis'
-  gem 'mime-types'
-  gem 'slim'
+  gem 'mime-types', :require => 'mime/types'
 
   if ENV['PADRINO_PATH']
     gem 'padrino', :path => ENV['PADRINO_PATH']
@@ -39,10 +43,11 @@ group :apps do
   end
 end
 
-platforms :mri_18 do
-  gem "ruby-debug"
-end
-
-platforms :mri_19 do
-  gem "ruby-debug19"
+group :debug do
+  platform :mri_18 do
+    gem 'ruby-debug'
+  end
+  platform :mri_19 do
+    gem 'ruby-debug19'
+  end
 end

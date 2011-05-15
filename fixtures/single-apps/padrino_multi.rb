@@ -1,4 +1,3 @@
-require File.expand_path('../load_paths', __FILE__)
 require 'padrino-core'
 
 module LibDemo
@@ -30,5 +29,3 @@ end
 
 Padrino.mount("complex_1_demo").to("/")
 Padrino.mount("complex_2_demo").to("/2")
-
-Padrino.run!(:port => ARGV[0] || 3000)
