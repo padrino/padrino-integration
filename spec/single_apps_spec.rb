@@ -5,11 +5,11 @@ describe "single-apps" do
   attr_reader :app
 
   def app_path(app)
-    "fixtures/single-apps/#{app}.rb"
+    File.expand_path("../../fixtures/single-apps/#{app}.rb", __FILE__)
   end
 
   def view(name)
-    "fixtures/single-apps/views/#{name}.haml"
+    File.expand_path("../../fixtures/single-apps/views/#{name}.haml", __FILE__)
   end
 
   def launch(app)

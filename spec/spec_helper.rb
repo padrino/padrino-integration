@@ -17,10 +17,6 @@ module Helpers
     run_bin(padrino_folder('padrino-gen/bin/padrino-gen'), command, *args)
   end
 
-  def bundle(command, *args)
-    run_bin(File.expand_path('../support/bundle', __FILE__), command, *args)
-  end
-
   def run_bin(bin_path, command, *args)
     `#{Gem.ruby} #{bin_path} #{command} #{args.join(" ")}`.strip
   end
@@ -101,7 +97,30 @@ module Webrat
   end
 end
 
-# Hack an annoying warnings
-def warn(text)
-  super(text) if text !~ /DataObjects::URI.new with arguments is deprecated/
+# Hack an annoying warnings: better way?
+module Kernel
+  def warn(text)
+    super(text) if text !~ /DataObjects::URI.new with arguments is deprecated/
+  end
 end
+
+# Don't tell me why but on 1.9.2 happen this:
+#
+#   NameError Exception: uninitialized constant Sequel::Plugins::ValidationHelpers::ClassMethods
+#   Sequel::Plugins::ValidationHelpers.const_defined?("ClassMethods")
+#
+# then I found:
+#
+#   # => Mongoid::Extensions::Object::Conversions::ClassMethods
+#   Sequel::Plugins::ValidationHelpers.send(:eval, "ClassMethods")
+#
+# and this didn't work:
+#
+#   # => NameError Exception: constant Sequel::Plugins::ValidationHelpers::ClassMethods not defined
+#   Sequel::Plugins::ValidationHelpers.send(:remove_const, "ClassMethods")
+#
+module Sequel::Plugins::ValidationHelpers
+  module ClassMethods; end
+end
+sequel_path = Bundler.load.specs.find{ |s| s.name == "sequel" }.full_gem_path
+load File.join(sequel_path, 'lib/sequel/plugins/validation_helpers.rb')

@@ -2,7 +2,7 @@ require File.expand_path('../spec_helper.rb', __FILE__)
 
 describe "padrino" do
   %w(slim erb haml).each do |engine|
-    %w(mongomapper datamapper activerecord mongoid sequel).each do |orm|
+    %w(sequel datamapper activerecord mongoid mongomapper).each do |orm|
       describe "project with #{orm} and #{engine}" do
         attr_reader :engine, :orm, :app, :tmp, :apptmp, :name
 

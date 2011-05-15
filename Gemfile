@@ -24,7 +24,8 @@ group :apps do
   gem 'data_mapper'
   gem 'dm-sqlite-adapter'
   gem 'bson_ext', :require => 'mongo'
-  gem 'mongoid', '2.0.0'
+  gem 'sequel'
+  gem 'mongoid'
   platforms :mri_18 do
     gem 'SystemTimer', :require => 'system_timer'
   end
@@ -33,7 +34,6 @@ group :apps do
   gem 'json'
   gem 'ohm'
   gem 'ohm-contrib', :require => 'ohm/contrib'
-  gem 'sequel'
   gem 'mime-types', :require => 'mime/types'
 
   if ENV['PADRINO_PATH']
