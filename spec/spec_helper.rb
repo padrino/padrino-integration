@@ -1,8 +1,9 @@
 require 'rubygems' unless defined?(Gem)
-require 'bundler'
 require 'date'
 require 'fileutils'
-Bundler.setup
+require 'bundler/setup'
+
+# Require our gems
 Bundler.require(:default, :debug, :apps)
 
 # Setup globally Padrino logger
