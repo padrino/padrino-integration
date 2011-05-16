@@ -2,7 +2,9 @@ require File.expand_path('../spec_helper.rb', __FILE__)
 
 describe "padrino" do
   %w(slim erb haml).each do |engine|
-    %w(mongomapper sequel datamapper activerecord mongoid).each do |orm|
+    %w(couchrest mongomapper sequel datamapper activerecord mongoid).each do |orm|
+      next if orm == "couchrest" && engine == "erb"
+
       describe "project with #{orm} and #{engine}" do
         attr_reader :engine, :orm, :app, :tmp, :apptmp, :name
 
@@ -22,7 +24,7 @@ describe "padrino" do
             FileUtils.rm_rf(apptmp)
             conn = Mongo::Connection.new
             conn.drop_database("#{name}_development")
-            # CouchRest.database!("#{name}_development").delete!
+            CouchRest.database!("#{name}_development").delete!
           rescue Exception => e
             puts "#{e.class}: #{e.message}"
           end

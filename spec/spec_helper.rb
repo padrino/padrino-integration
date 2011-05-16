@@ -23,7 +23,7 @@ module Helpers
   end
 
   def replace_seed(path)
-    File.open("#{path}/db/seeds.rb", "w") do |f| f.puts <<-RUBY
+    File.open("#{path}/db/seeds.rb", "w") do |f| f.puts <<-RUBY.gsub(/^ {8}/, '')
         Account.create(:email => 'info@padrino.com',
                        :password => 'sample',
                        :password_confirmation => 'sample',

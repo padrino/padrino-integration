@@ -32,3 +32,8 @@ task :launch, :app do |t, args|
     File.open(app, "w") { |f| f.write app_was }
   end
 end
+
+task "Remove *.rbc"
+task :rbc do
+  Dir["**/*.rbc"].each { |rbc| `rm -rf #{rbc}` }
+end

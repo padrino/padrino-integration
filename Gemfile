@@ -17,11 +17,15 @@ group :apps do
   gem 'rr'
   gem 'activerecord', :require => 'active_record'
   gem 'sqlite3'
-  # For unkown reason the couchrest_model depends from railties wich depepends from actionpack wich load rails
-  # and a lot of unuseful stuff BUT needs erubis '2.6.6' wich is not compatible wth padrino/tilt/sinatra and the world
-  # gem 'couchrest_model'
+  # Official couchrest_models depends from railties wich depends from actionpack wich depends from a lot of deps...
+  gem 'couchrest_model', :git => 'git://github.com/couchrest/couchrest_model.git'
   gem 'json_pure'
-  gem 'data_mapper'
+  gem 'dm-aggregates'
+  gem 'dm-constraints'
+  gem 'dm-core'
+  gem 'dm-migrations'
+  gem 'dm-timestamps'
+  gem 'dm-validations'
   gem 'dm-sqlite-adapter'
   gem 'bson_ext', :require => 'mongo'
   gem 'sequel'
@@ -31,7 +35,6 @@ group :apps do
   end
   gem 'mongo_mapper'
   gem 'mongomatic'
-  gem 'json'
   gem 'ohm'
   gem 'ohm-contrib', :require => 'ohm/contrib'
   gem 'mime-types', :require => 'mime/types'
