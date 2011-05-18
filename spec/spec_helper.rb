@@ -4,10 +4,10 @@ require 'fileutils'
 require 'bundler/setup'
 
 # Require our gems
-Bundler.require(:default, :debug, :apps)
+Bundler.require(:default, :debug, :apps, :padrino)
 
 # Setup globally Padrino logger
-Padrino::Logger::Config[:development][:stream] = :null
+Padrino::Logger::Config[:development][:stream] = :stdout
 
 module Helpers
   def padrino(command, *args)
@@ -98,10 +98,15 @@ module Webrat
   end
 end
 
-# Hack an annoying warnings: better way?
-module Kernel
-  def warn(text)
-    super(text) if text !~ /DataObjects::URI.new with arguments is deprecated/
+# Clear ObjectSpace
+module ObjectSpace
+  extend self
+
+  def clear!
+    @_object_space_was ||= ObjectSpace.classes
+    (ObjectSpace.classes - @_object_space_was).each { |object| Padrino::Reloader.remove_constant(object) }
+    Padrino::Reloader.exclude_constants.clear
+    Padrino::Reloader.include_constants.clear
   end
 end
 

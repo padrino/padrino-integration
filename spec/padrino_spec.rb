@@ -9,7 +9,6 @@ describe "padrino" do
         attr_reader :engine, :orm, :app, :tmp, :apptmp, :name
 
         before :all do
-          Padrino.clear!
           @engine = engine
           @orm    = orm
           @name   = "app%x" % rand(2**150)
@@ -25,6 +24,12 @@ describe "padrino" do
             conn = Mongo::Connection.new
             conn.drop_database("#{name}_development")
             CouchRest.database!("#{name}_development").delete!
+            Padrino.clear!
+            Padrino::Reloader.include_constants.clear
+            Padrino::Reloader.exclude_constants.clear
+            Padrino::Reloader.remove_constant("Admin")
+            Padrino::Reloader.remove_constant(name)
+            Padrino::Reloader.remove_constant("Account")
           rescue Exception => e
             puts "#{e.class}: #{e.message}"
           end

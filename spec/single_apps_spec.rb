@@ -69,6 +69,16 @@ describe "single-apps" do
     it "should get the original content" do
       visit "/"
       body.should =~ /Given random/
+      visit "/old"
+      body.should == "Complex1Demo"
+      visit "/2"
+      body.should == "The magick number is: 12!"
+      visit "/2/old"
+      body.should == "Complex2Demo"
+    end
+
+    it "should reload app 1" do
+      visit "/"
       body[/(\d)/]
       random_was = $1
       visit "/"
@@ -78,18 +88,21 @@ describe "single-apps" do
       visit "/"
       body.should_not =~ /^Given random #{random_was}$/
       visit "/old"
-      body.should == "Old Sinatra Way"
-      visit "/2"
-      body.should == "The magick number is: 12!"
+      body.should == "Complex1Demo"
       visit "/2/old"
-      body.should == "Old Sinatra Way"
+      body.should == "Complex2Demo"
     end
 
-    it "should reload inline content" do
+    it "should reload app 2" do
       editing app_path(:padrino_multi), "The magick number is: 14!", /The magick number is: 12!/ do
         visit "/2"
+        debugger
         body.should == "The magick number is: 14!"
       end
+      visit "/old"
+      body.should == "Complex1Demo"
+      visit "/2/old"
+      body.should == "Complex2Demo"
     end
   end
 

@@ -38,7 +38,9 @@ group :apps do
   gem 'ohm'
   gem 'ohm-contrib', :require => 'ohm/contrib'
   gem 'mime-types', :require => 'mime/types'
+end
 
+group :padrino do
   if ENV['PADRINO_PATH']
     gem 'padrino', :path => ENV['PADRINO_PATH']
   else

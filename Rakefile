@@ -1,4 +1,5 @@
 require 'rubygems' unless defined?(Gem)
+require 'bundler/setup'
 require 'rspec/core/rake_task'
 
 specs = Dir['./spec/**/*_spec.rb']
@@ -23,8 +24,9 @@ end
 desc "Launch a single app"
 task :launch, :app do |t, args|
   raise "Please specify an app=padrino_basic !" unless args.app
+  Bundler.require(:debug, :padrino)
   begin
-    app = "fixtures/single-apps/#{args.app}.rb"
+    app = File.expand_path("../fixtures/single-apps/#{args.app}.rb", __FILE__)
     app_was = File.read(app)
     require app
     Padrino.run!
