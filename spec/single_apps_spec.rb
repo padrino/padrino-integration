@@ -96,7 +96,6 @@ describe "single-apps" do
     it "should reload app 2" do
       editing app_path(:padrino_multi), "The magick number is: 14!", /The magick number is: 12!/ do
         visit "/2"
-        debugger
         body.should == "The magick number is: 14!"
       end
       visit "/old"
