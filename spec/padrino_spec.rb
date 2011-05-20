@@ -47,7 +47,7 @@ describe "padrino" do
           out.should =~ /The admin panel has been mounted/
           if orm !~ /mongo|couch/
             out = padrino(:rake, migrate(orm), "--chdir=#{apptmp}")
-            out.should =~ /Rake/i
+            out.should =~ /=> Executing Rake/i
           end
           replace_seed(apptmp)
           out = padrino(:rake, "seed", "--chdir=#{apptmp}")
@@ -93,11 +93,21 @@ describe "padrino" do
           body.should have_selector "#account_name", :value => "Foo"
           body.should have_selector "#account_surname", :value => "Bar"
           click_link "Accounts"
-          # TODO: Check Destroy of account
-          # TODO: Check: padrino g model Post title:string body:text; padrino g admin_page post
           # Logout
           click_button "Logout"
           body.should have_selector "h2", :content => "Login Box"
+        end
+
+        it "should generate an admin page" do
+          out = padrino_gen(:model, :post, "title:string", "body:string", "--root=#{apptmp}")
+          out.should =~ /orms\/#{orm}/i
+          if orm !~ /mongo|couch/
+            out = padrino(:rake, migrate(orm), "--chdir=#{apptmp}")
+            out.should =~ /=> Executing Rake/i
+          end
+          out = padrino_gen(:admin_page, :post, "--root=#{apptmp}")
+          out.should =~ /admin\/views\/posts/i
+          # TODO: check here the generated code
         end
       end
     end
