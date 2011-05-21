@@ -1,5 +1,6 @@
 source :rubygems
 
+gem "rake"
 gem "webrat"
 gem "rspec"
 gem "rack-test", :require => 'rack/test'
@@ -9,7 +10,6 @@ group :apps do
   gem 'erubis', "~> 2.7.0"
   gem 'slim'
   gem 'bcrypt-ruby', :require => 'bcrypt'
-  gem 'rake'
   gem 'thor'
   gem 'rack-flash', :require => 'rack/flash'
   gem 'thin'

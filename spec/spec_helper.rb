@@ -37,7 +37,7 @@ module Helpers
     case orm.to_sym
       when :activerecord then "ar:migrate"
       when :datamapper   then "dm:migrate"
-      when :sequel       then "sq:migrate:auto"
+      when :sequel       then "sq:migrate:up"
       else ""
     end
   end

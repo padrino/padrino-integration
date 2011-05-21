@@ -30,6 +30,7 @@ describe "padrino" do
             Padrino::Reloader.remove_constant("Admin")
             Padrino::Reloader.remove_constant(name)
             Padrino::Reloader.remove_constant("Account")
+            Padrino::Reloader.remove_constant("Post")
           rescue Exception => e
             puts "#{e.class}: #{e.message}"
           end
@@ -107,7 +108,34 @@ describe "padrino" do
           end
           out = padrino_gen(:admin_page, :post, "--root=#{apptmp}")
           out.should =~ /admin\/views\/posts/i
-          # TODO: check here the generated code
+          # Launch project, with few hacks...
+          @app = Padrino.application
+          visit "/admin"
+          fill_in :email,    :with => "info@sample.com"
+          fill_in :password, :with => "sample"
+          click_button "Sign In"
+          # New
+          2.times do
+            click_link "Posts"
+            click_link "New"
+            fill_in "post[title]", :with => "Foo"
+            fill_in "post[body]", :with => "Bar"
+            click_button "Save"
+            body.should have_selector ".notice", :content => "Post was successfully created."
+          end
+          # Edit
+          click_link "Posts"
+          click_button "Edit"
+          fill_in "post[title]", :with => "Padrino"
+          fill_in "post[body]", :with => "Is Cool"
+          click_button "Save"
+          body.should have_selector ".notice", :content => "Post was successfully updated."
+          click_link "Posts"
+          body.should have_selector "td", :content => "Padrino"
+          body.should have_selector "td", :content => "Is Cool"
+          # Destroy
+          click_button "Delete"
+          body.should have_selector ".notice", :content => "Post was successfully destroyed."
         end
       end
     end
