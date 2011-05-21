@@ -20,7 +20,6 @@ group :apps do
   # Official couchrest_models depends from railties wich depends from actionpack wich depends from a lot of deps...
   gem 'couchrest_model', :git => 'git://github.com/couchrest/couchrest_model.git'
   gem 'json_pure'
-  gem 'data_mapper'
   gem 'dm-aggregates'
   gem 'dm-constraints'
   gem 'dm-core'
