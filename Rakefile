@@ -8,7 +8,7 @@ specs.each do |spec|
   RSpec::Core::RakeTask.new("spec:#{File.basename(spec, '_spec.rb')}") do |t|
     t.pattern = spec
     t.skip_bundler = true
-    t.rspec_opts = %w(-fs --color --fail-fast -d)
+    t.rspec_opts = %w(-fs --color --fail-fast)
     t.rspec_opts << "-l #{ARGV[1]}" if ARGV[1]
   end
 end
@@ -17,7 +17,7 @@ desc "Run complete application spec suite"
 RSpec::Core::RakeTask.new("spec") do |t|
   t.skip_bundler = true
   t.pattern = './spec/**/*_spec.rb'
-  t.rspec_opts = %w(-fs --color --fail-fast -d)
+  t.rspec_opts = %w(-fs --color --fail-fast)
   t.rspec_opts << "-l #{ARGV[1]}" if ARGV[1]
 end
 
