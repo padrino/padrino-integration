@@ -16,9 +16,8 @@ bundle install
 Run the integration test suite:
 
 ```
-$ gem install couchrest_model # generated projects need a stable version but during tests we use git version
 $ gem install data_mapper     # generated projects need this but we use separated gem because dm-serialize has a conflict with couchrest_model
-$ gem install SystemTimer # for rbx
+$ gem install SystemTimer     # for rbx
 $ rake spec
 $ rake spec:padrino # => to run only padrino specs
 $ rake spec:single_apps # => to run only single-apps specs

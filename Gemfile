@@ -17,8 +17,7 @@ group :apps do
   gem 'rr'
   gem 'activerecord', :require => 'active_record'
   gem 'sqlite3'
-  # Official couchrest_models depends from railties wich depends from actionpack wich depends from a lot of deps...
-  gem 'couchrest_model', :git => 'git://github.com/couchrest/couchrest_model.git'
+  gem 'couchrest_model', '~> 1.1.0.rc1'
   gem 'json_pure'
   gem 'dm-aggregates'
   gem 'dm-constraints'
