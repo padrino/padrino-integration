@@ -17,7 +17,7 @@ group :apps do
   gem 'rr'
   gem 'activerecord', :require => 'active_record'
   gem 'sqlite3'
-  gem 'couchrest_model', '~> 1.1.0.rc1'
+  gem 'couchrest_model', '~> 1.1.0'
   gem 'json_pure'
   gem 'dm-aggregates'
   gem 'dm-constraints'
