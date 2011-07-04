@@ -1,6 +1,7 @@
 source :rubygems
 
 gem "rake"
+gem "nokogiri", "1.4.4"
 gem "webrat"
 gem "rspec"
 gem "rack-test", :require => 'rack/test'
@@ -29,9 +30,7 @@ group :apps do
   gem 'bson_ext', :require => 'mongo'
   gem 'sequel'
   gem 'mongoid'
-  platforms :mri_18 do
-    gem 'SystemTimer', :require => 'system_timer'
-  end
+  gem 'SystemTimer', :require => 'system_timer', :platforms => :mri_18
   gem 'mongo_mapper'
   gem 'mongomatic'
   gem 'ohm'
@@ -48,10 +47,6 @@ group :padrino do
 end
 
 group :debug do
-  platform :mri_18 do
-    gem 'ruby-debug'
-  end
-  platform :mri_19 do
-    gem 'ruby-debug19'
-  end
+  gem 'ruby-debug',   :platform => :mri_18
+  gem 'ruby-debug19', :platform => :mri_19
 end
