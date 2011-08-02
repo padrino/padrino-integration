@@ -61,6 +61,11 @@ describe "single-apps" do
         body.should == "Im\n\napp\nin a custom layout\n"
       end
     end
+
+    it "show utf-8 chars" do
+      visit "/utf-8"
+      body.strip.should == "∴\nin a layout"
+    end
   end
 
   describe "padrino_multi.rb" do
@@ -113,10 +118,6 @@ describe "single-apps" do
       body.should == "Basic text"
       visit "/h1"
       body.should have_selector "h1", :content => "Only an h1 tag in haml"
-      pending "waiting tilt haml utf8 patch" do
-        visit "/h1"
-        body.should == "∴"
-      end
     end
   end
 

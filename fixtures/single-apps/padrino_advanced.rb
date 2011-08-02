@@ -12,6 +12,11 @@ class PadrinoApp1 < Padrino::Application
   get :index, :map => '/' do
     render "adv1"
   end
+
+  get :utf8, :map => '/utf-8' do
+    render "utf8"
+  end
+
 end
 
 Padrino.mount(PadrinoApp1).to("/")
