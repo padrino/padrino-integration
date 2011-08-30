@@ -143,7 +143,24 @@ describe "padrino" do
             body.should have_selector ".notice", :content => "Post was successfully destroyed."
           end
         end
-      end
-    end
-  end
-end
+
+        it "should reload a controller" do
+          pending
+          controller = "%s.controllers do; get '/' do; 'hi'; end; end" % name.capitalize
+          in_clean_env do
+            visit "/"
+            response.ok?.should == false
+            File.open(File.join(apptmp, 'app', 'controllers', 'base.rb'), 'w') { |f| f.write controller }
+          end
+          in_clean_env do
+            visit "/"
+            response.body.should == 'hi'
+            File.open(File.join(apptmp, 'app', 'controllers', 'base.rb'), 'w') { |f| f.write controller.gsub(/hi/, 'Hello') }
+            visit "/"
+            response.body.should == 'Hello'
+          end
+        end
+      end # describe
+    end # orm
+  end # engine
+end # describe

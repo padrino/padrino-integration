@@ -7,7 +7,8 @@ require 'bundler/setup'
 Bundler.require(:default, :debug, :apps, :padrino)
 
 # Setup globally Padrino logger
-Padrino::Logger::Config[:development][:stream] = :null
+Padrino::Logger::Config[:development][:stream] = StringIO.new # :stdout
+Padrino::Logger::Config[:development][:log_level] = :devel
 
 module Helpers
   def padrino(command, *args)

@@ -1,5 +1,4 @@
 require 'rubygems' unless defined?(Gem)
-require 'bundler/setup'
 require 'rspec/core/rake_task'
 
 specs = Dir['./spec/**/*_spec.rb']
@@ -9,7 +8,6 @@ specs.each do |spec|
     t.pattern = spec
     t.skip_bundler = true
     t.rspec_opts = %w(-fs --color --fail-fast)
-    t.rspec_opts << "-l #{ARGV[1]}" if ARGV[1]
   end
 end
 
@@ -18,7 +16,6 @@ RSpec::Core::RakeTask.new("spec") do |t|
   t.skip_bundler = true
   t.pattern = './spec/**/*_spec.rb'
   t.rspec_opts = %w(-fs --color --fail-fast)
-  t.rspec_opts << "-l #{ARGV[1]}" if ARGV[1]
 end
 
 desc "Launch a single app"
@@ -33,9 +30,4 @@ task :launch, :app do |t, args|
   ensure
     File.open(app, "w") { |f| f.write app_was }
   end
-end
-
-task "Remove *.rbc"
-task :rbc do
-  Dir["**/*.rbc"].each { |rbc| `rm -rf #{rbc}` }
 end
