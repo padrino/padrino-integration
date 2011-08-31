@@ -16,7 +16,7 @@ group :apps do
   gem 'thin'
   gem 'mocha'
   gem 'rr'
-  gem 'activerecord', '3.0.10', :require => 'active_record'
+  gem 'activerecord', '3.1.0', :require => 'active_record'
   gem 'sqlite3'
   gem 'couchrest_model', '~> 1.1.0'
   gem 'json_pure'
