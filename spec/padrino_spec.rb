@@ -15,6 +15,7 @@ describe "padrino" do
 
   %w(slim erb haml).each do |engine|
     %w(couchrest mongomapper sequel datamapper activerecord mongoid).each do |orm|
+      next if orm == "couchrest" && ENV['TRAVIS']
       next if orm == "couchrest" && engine == "erb"
 
       describe "project with #{orm} and #{engine}" do
