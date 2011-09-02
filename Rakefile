@@ -31,3 +31,5 @@ task :launch, :app do |t, args|
     File.open(app, "w") { |f| f.write app_was }
   end
 end
+
+rake :default => :spec
