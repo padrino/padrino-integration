@@ -32,4 +32,5 @@ task :launch, :app do |t, args|
   end
 end
 
-task :default => :spec
+# TRAVIS handle concurrency rubies, so single_apps are not edited correctly.
+task :default => 'spec:padrino'
