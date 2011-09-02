@@ -7,7 +7,7 @@ require 'bundler/setup'
 Bundler.require(:default, :debug, :apps, :padrino)
 
 # Setup globally Padrino logger
-Padrino::Logger::Config[:development][:stream] = StringIO.new # :stdout
+Padrino::Logger::Config[:development][:stream] = :null # :stdout
 Padrino::Logger::Config[:development][:log_level] = :devel
 
 module Helpers
@@ -96,18 +96,6 @@ module Webrat
     def default_current_host
       adapter.class==Webrat::RackAdapter ? "example.org" : "www.example.com"
     end
-  end
-end
-
-# Clear ObjectSpace
-module ObjectSpace
-  extend self
-
-  def clear!
-    @_object_space_was ||= ObjectSpace.classes
-    (ObjectSpace.classes - @_object_space_was).each { |object| Padrino::Reloader.remove_constant(object) }
-    Padrino::Reloader.exclude_constants.clear
-    Padrino::Reloader.include_constants.clear
   end
 end
 

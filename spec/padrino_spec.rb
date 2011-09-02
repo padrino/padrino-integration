@@ -36,7 +36,7 @@ describe "padrino" do
             FileUtils.rm_rf(apptmp)
             conn = Mongo::Connection.new
             conn.drop_database("#{name}_development")
-            CouchRest.database!("#{name}_development").delete!
+            CouchRest.database!("#{name}_development").delete! unless ENV['TRAVIS']
             Padrino.clear!
           rescue Exception => e
             puts "#{e.class}: #{e.message}"
@@ -145,20 +145,27 @@ describe "padrino" do
           end
         end
 
-        it "should reload a controller" do
-          pending
+        it "should detect a new file" do
           controller = "%s.controllers do; get '/' do; 'hi'; end; end" % name.capitalize
           in_clean_env do
             visit "/"
             response.ok?.should == false
             File.open(File.join(apptmp, 'app', 'controllers', 'base.rb'), 'w') { |f| f.write controller }
+            Padrino.reload!
+            visit "/"
+            response.body.should == 'hi'
           end
+        end
+
+        it "should reload a file" do
+          controller = File.read(File.join(apptmp, 'app', 'controllers', 'base.rb'))
           in_clean_env do
             visit "/"
             response.body.should == 'hi'
-            File.open(File.join(apptmp, 'app', 'controllers', 'base.rb'), 'w') { |f| f.write controller.gsub(/hi/, 'Hello') }
+            File.open(File.join(apptmp, 'app', 'controllers', 'base.rb'), 'w') { |f| f.write controller.gsub(/hi/, 'hello') }
+            Padrino.reload!
             visit "/"
-            response.body.should == 'Hello'
+            response.body.should == 'hello'
           end
         end
       end # describe
