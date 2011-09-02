@@ -8,8 +8,8 @@ rvm:
 notifications:
   irc: "irc.freenode.org#padrino"
   recipients:
+    - d.dagostino@lipsiasoft.com
     - nesquena@gmail.com
     - mr.arthur.chiu@gmail.com
     - joshbuddy@gmail.com
-    - d.dagostino@lipsiasoft.com
     - florian.gilcher@asquera.de
