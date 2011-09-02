@@ -1,2 +1,3 @@
 fixtures/tmp/*
 *.rbc
+Gemfile.lock
