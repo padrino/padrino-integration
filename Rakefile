@@ -32,4 +32,4 @@ task :launch, :app do |t, args|
   end
 end
 
-rake :default => :spec
+task :default => :spec
