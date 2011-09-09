@@ -45,8 +45,8 @@ describe "padrino" do
 
         it "should generate a project" do
           out = padrino_gen(:project, "#{name}", "-d=#{orm}", "-e=#{engine}", "--root=#{tmp}", "--dev")
-          out.should =~ /Applying '#{orm}'/i
-          out.should =~ /Applying '#{engine}'/i
+          out.should =~ /applying.*#{orm}/i
+          out.should =~ /applying.*#{engine}/i
           ENV['BUNDLE_GEMFILE'] = File.join(apptmp, "Gemfile")
         end
 
