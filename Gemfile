@@ -12,7 +12,7 @@ group :apps do
   gem 'slim'
   gem 'bcrypt-ruby', :require => 'bcrypt'
   gem 'thor'
-  gem 'rack-flash', :require => 'rack/flash'
+  gem 'sinatra-flash', :require => 'sinatra/flash'
   gem 'thin'
   gem 'mocha'
   gem 'rr'
