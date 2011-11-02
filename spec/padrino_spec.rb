@@ -14,7 +14,7 @@ describe "padrino" do
   end
 
   %w(slim erb haml).each do |engine|
-    %w(couchrest mongomapper sequel datamapper activerecord mongoid).each do |orm|
+    %w(mini_record couchrest mongomapper sequel datamapper activerecord mongoid).each do |orm|
       # next if orm == "couchrest" && ENV['TRAVIS']
       next if orm == "couchrest" && engine == "erb"
 
@@ -53,7 +53,7 @@ describe "padrino" do
         it "should generate an admin" do
           out = padrino_gen(:admin, "--root=#{apptmp}")
           out.should =~ /The admin panel has been mounted/
-          if orm !~ /mongo|couch/
+          if orm !~ /mongo|couch|mini/
             out = padrino(:rake, migrate(orm), "--chdir=#{apptmp}")
             out.should =~ /=> Executing Rake/i
           end
@@ -108,7 +108,7 @@ describe "padrino" do
         it "should generate an admin page" do
           out = padrino_gen(:model, :post, "title:string", "body:string", "--root=#{apptmp}")
           out.should =~ /orms\/#{orm}/i
-          if orm !~ /mongo|couch/
+          if orm !~ /mongo|couch|mini/
             out = padrino(:rake, migrate(orm), "--chdir=#{apptmp}")
             out.should =~ /=> Executing Rake/i
           end

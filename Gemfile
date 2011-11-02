@@ -1,14 +1,14 @@
 source :rubygems
 
-gem "rake"
-gem "nokogiri", "1.4.4"
-gem "webrat"
-gem "rspec"
-gem "rack-test", :require => 'rack/test'
+gem 'rake'
+gem 'nokogiri', '1.4.4'
+gem 'webrat'
+gem 'rspec'
+gem 'rack-test', :require => 'rack/test'
 
 group :apps do
   gem 'haml'
-  gem 'erubis', "~> 2.7.0"
+  gem 'erubis', '~> 2.7.0'
   gem 'slim'
   gem 'bcrypt-ruby', :require => 'bcrypt'
   gem 'thor'
@@ -16,7 +16,8 @@ group :apps do
   gem 'thin'
   gem 'mocha'
   gem 'rr'
-  gem 'activerecord', '3.1.0', :require => 'active_record'
+  gem 'mini_record'
+  gem 'activerecord', '3.1.1', :require => 'active_record'
   gem 'sqlite3'
   gem 'couchrest_model',   '~> 1.1.0'
   gem 'json_pure'
@@ -40,6 +41,7 @@ end
 
 group :padrino do
   if ENV['PADRINO_PATH']
+    puts "\e[33mUsing padrino from: #{ENV['PADRINO_PATH']}\e[0m"
     gem 'padrino', :path => ENV['PADRINO_PATH']
   else
     gem 'padrino', :git => "git://github.com/padrino/padrino-framework.git"
