@@ -16,10 +16,10 @@ group :apps do
   gem 'thin'
   gem 'mocha'
   gem 'rr'
-  gem 'mini_record'
-  gem 'activerecord', '3.1.1', :require => 'active_record'
+  gem 'mini_record', '0.3.0.b'
+  gem 'activerecord', '3.2.0', :require => 'active_record'
   gem 'sqlite3'
-  gem 'couchrest_model',   '~> 1.1.0'
+  gem 'couchrest_model',   '~> 1.1.2'
   gem 'json_pure'
   gem 'dm-aggregates',     '~>1.2.0'
   gem 'dm-constraints',    '~>1.2.0'
@@ -47,8 +47,3 @@ group :padrino do
     gem 'padrino', :git => "git://github.com/padrino/padrino-framework.git"
   end
 end
-
-# group :debug do
-#   gem 'ruby-debug',   :platform => :mri_18
-#   gem 'ruby-debug19', :platform => :mri_19
-# end
