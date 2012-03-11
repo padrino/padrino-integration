@@ -1,7 +1,7 @@
 source :rubygems
 
 gem 'rake'
-gem 'nokogiri', '1.4.4'
+gem 'nokogiri'
 gem 'webrat'
 gem 'rspec'
 gem 'rack-test', :require => 'rack/test'
@@ -16,8 +16,8 @@ group :apps do
   gem 'thin'
   gem 'mocha'
   gem 'rr'
-  gem 'mini_record', '0.3.0.b'
-  gem 'activerecord', '3.2.0', :require => 'active_record'
+  gem 'mini_record'
+  gem 'activerecord', :require => 'active_record'
   gem 'sqlite3'
   gem 'couchrest_model',   '~> 1.1.2'
   gem 'json_pure'
