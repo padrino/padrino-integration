@@ -145,29 +145,29 @@ describe "padrino" do
           end
         end
 
-        # it "should detect a new file" do
-        #   controller = "%s.controllers do; get '/' do; 'hi'; end; end" % name.capitalize
-        #   in_clean_env do
-        #     visit "/"
-        #     response.ok?.should == false
-        #     File.open(File.join(apptmp, 'app', 'controllers', 'base.rb'), 'w') { |f| f.write controller }
-        #     Padrino.reload!
-        #     visit "/"
-        #     response.body.should == 'hi'
-        #   end
-        # end
+        it "should detect a new file" do
+          controller = "%s.controllers do; get '/' do; 'hi'; end; end" % name.capitalize
+          in_clean_env do
+            visit "/"
+            response.ok?.should == false
+            File.open(File.join(apptmp, 'app', 'controllers', 'base.rb'), 'w') { |f| f.write controller }
+            Padrino.reload!
+            visit "/"
+            response.body.should == 'hi'
+          end
+        end
 
-        # it "should reload a file" do
-        #   controller = File.read(File.join(apptmp, 'app', 'controllers', 'base.rb'))
-        #   in_clean_env do
-        #     visit "/"
-        #     response.body.should == 'hi'
-        #     File.open(File.join(apptmp, 'app', 'controllers', 'base.rb'), 'w') { |f| f.write controller.gsub(/hi/, 'hello') }
-        #     Padrino.reload!
-        #     visit "/"
-        #     response.body.should == 'hello'
-        #   end
-        # end
+        it "should reload a file" do
+          controller = File.read(File.join(apptmp, 'app', 'controllers', 'base.rb'))
+          in_clean_env do
+            visit "/"
+            response.body.should == 'hi'
+            File.open(File.join(apptmp, 'app', 'controllers', 'base.rb'), 'w') { |f| f.write controller.gsub(/hi/, 'hello') }
+            Padrino.reload!
+            visit "/"
+            response.body.should == 'hello'
+          end
+        end
       end # describe
     end # orm
   end # engine
