@@ -1,7 +1,5 @@
 # Padrino Integration
 
-## Preface
-
 [![Build Status](https://secure.travis-ci.org/padrino/padrino-integration.png?branch=master)](http://travis-ci.org/padrino/padrino-integration)
 
 As we approach 1.0, we want to get solid release processes in place.
