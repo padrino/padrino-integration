@@ -4,12 +4,11 @@ rvm:
   - 1.8.7
   - 1.9.2
   - 1.9.3
-  - ruby-head
   - ree
 notifications:
   irc: "irc.freenode.org#padrino"
   recipients:
-    - d.dagostino@lipsiasoft.com
+    - info@daddye.it
     - nesquena@gmail.com
     - mr.arthur.chiu@gmail.com
     - joshbuddy@gmail.com

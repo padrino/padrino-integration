@@ -13,10 +13,9 @@ describe "padrino" do
     Process.waitpid(pid)
   end
 
-  %w(slim erb haml).each do |engine|
-    %w(activerecord mini_record couchrest mongomapper sequel datamapper mongoid).each do |orm|
-      # next if orm == "couchrest" && ENV['TRAVIS']
-      next if orm == "couchrest" && engine == "erb"
+  %w(slim haml erb).each do |engine|
+    %w(sequel ohm activerecord mini_record couchrest mongomapper datamapper mongoid).each do |orm|
+      next if orm == 'couchrest' && engine == "erb"
 
       describe "project with #{orm} and #{engine}" do
         attr_reader :engine, :orm, :app, :tmp, :apptmp, :name
@@ -34,9 +33,9 @@ describe "padrino" do
         after :all do
           begin
             FileUtils.rm_rf(apptmp)
-            conn = Mongo::Connection.new
-            conn.drop_database("#{name}_development")
+            Mongo::Connection.new.drop_database("#{name}_development")
             CouchRest.database!("#{name}_development").delete! unless ENV['TRAVIS']
+            Ohm.flush
             Padrino.clear!
           rescue Exception => e
             puts "#{e.class}: #{e.message}"
@@ -53,7 +52,7 @@ describe "padrino" do
         it "should generate an admin" do
           out = padrino_gen(:admin, "--root=#{apptmp}")
           out.should =~ /The admin panel has been mounted/
-          if orm !~ /mongo|couch|mini/
+          if orm !~ /mongo|couch|mini|ohm/
             out = padrino(:rake, migrate(orm), "--chdir=#{apptmp}")
             out.should =~ /=> Executing Rake/i
           end
@@ -108,7 +107,7 @@ describe "padrino" do
         it "should generate an admin page" do
           out = padrino_gen(:model, :post, "title:string", "body:string", "--root=#{apptmp}")
           out.should =~ /orms\/#{orm}/i
-          if orm !~ /mongo|couch|mini/
+          if orm !~ /mongo|couch|mini|ohm/
             out = padrino(:rake, migrate(orm), "--chdir=#{apptmp}")
             out.should =~ /=> Executing Rake/i
           end

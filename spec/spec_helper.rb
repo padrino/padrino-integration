@@ -25,11 +25,13 @@ module Helpers
 
   def replace_seed(path)
     File.open("#{path}/db/seeds.rb", "w") do |f| f.puts <<-RUBY.gsub(/^ {8}/, '')
-        Account.create(:email => 'info@padrino.com',
-                       :password => 'sample',
-                       :password_confirmation => 'sample',
-                       :role => 'admin')
-        puts "Ok"
+        account = Account.create(
+            :email => 'info@padrino.com',
+            :password => 'sample',
+            :password_confirmation => 'sample',
+            :role => 'admin'
+        )
+        puts 'Ok'
       RUBY
     end
   end
@@ -98,25 +100,3 @@ module Webrat
     end
   end
 end
-
-# Don't tell me why but on 1.9.2 happen this:
-#
-#   NameError Exception: uninitialized constant Sequel::Plugins::ValidationHelpers::ClassMethods
-#   # => true
-#   Sequel::Plugins::ValidationHelpers.const_defined?("ClassMethods")
-#
-# then I found:
-#
-#   # => Mongoid::Extensions::Object::Conversions::ClassMethods
-#   Sequel::Plugins::ValidationHelpers.send(:eval, "ClassMethods")
-#
-# and this didn't work:
-#
-#   # => NameError Exception: constant Sequel::Plugins::ValidationHelpers::ClassMethods not defined
-#   Sequel::Plugins::ValidationHelpers.send(:remove_const, "ClassMethods")
-#
-module Sequel::Plugins::ValidationHelpers
-  module ClassMethods; end
-end
-sequel_path = Bundler.load.specs.find{ |s| s.name == "sequel" }.full_gem_path
-load File.join(sequel_path, 'lib/sequel/plugins/validation_helpers.rb')
