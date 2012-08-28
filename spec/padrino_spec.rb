@@ -13,14 +13,10 @@ describe "padrino" do
     Process.waitpid(pid)
   end
 
-  %w(slim).each do |engine|
-  # %w(slim haml erb).each do |engine|
-    # %w(sequel ohm activerecord mini_record couchrest mongomapper datamapper mongoid).each do |orm|
-    %w(mongomapper).each do |orm|
+  %w(slim haml erb).each do |engine|
+    %w(sequel ohm activerecord mini_record couchrest mongomapper datamapper mongoid).each do |orm|
       next if orm == 'couchrest' && engine == "erb"
 
-      # next if orm == 'mongomapper' # mongomapper issue !!!!
-      next if engine == "erb" # at this moment, admin not support erb engine
       describe "project with #{orm} and #{engine}" do
         attr_reader :engine, :orm, :app, :tmp, :apptmp, :name
 
@@ -36,7 +32,7 @@ describe "padrino" do
 
         after :all do
           begin
-            # FileUtils.rm_rf(apptmp)
+            FileUtils.rm_rf(apptmp)
             Mongo::Connection.new.drop_database("#{name}_development") if orm  =~ /mongo/i
             CouchRest.database!("#{name}_development").delete! unless ENV['TRAVIS']
             Ohm.flush
