@@ -3,6 +3,8 @@ source :rubygems
 gem 'rake'
 gem 'nokogiri'
 gem 'webrat'
+gem 'capybara'
+gem 'poltergeist'
 gem 'rspec'
 gem 'rack-test', :require => 'rack/test'
 

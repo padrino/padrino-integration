@@ -6,7 +6,7 @@ require 'padrino-core'
 class PadrinoBasic < Padrino::Application
 
   get :index, :map => '/' do
-    "Edit ... Im reloadable!"
+    "Edited ... Im reloadable!"
   end
 end
 
