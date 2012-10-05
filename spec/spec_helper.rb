@@ -4,7 +4,6 @@ require 'fileutils'
 require 'bundler/setup'
 require 'capybara/dsl'
 require 'capybara/rspec'
-require "capybara-webkit"
 require 'capybara/poltergeist'
 
 # Require our gems
