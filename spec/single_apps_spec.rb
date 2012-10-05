@@ -22,6 +22,8 @@ describe "single-apps" do
     else app.to_s =~ /sinatra/
       @app = app.to_s.camelize.constantize
     end
+    Capybara.app = @app
+    # Capybara.app_host = "http://localhost:3000"
   end
 
   describe "padrino_basic.rb" do

@@ -2,6 +2,10 @@ require 'rubygems' unless defined?(Gem)
 require 'date'
 require 'fileutils'
 require 'bundler/setup'
+require 'capybara/dsl'
+require 'capybara/rspec'
+require "capybara-webkit"
+require 'capybara/poltergeist'
 
 # Require our gems
 Bundler.require(:default, :debug, :apps, :padrino)
@@ -60,43 +64,11 @@ module Helpers
     File.open(file, "w") { |f| f.puts buf_was }
   end
 
-  def method_missing(name, *args, &block)
-    if response && response.respond_to?(name)
-      response.send(name, *args, &block)
-    else
-      super(name, *args, &block)
-    end
-  end
 end
-
-Webrat.configure { |config| config.mode = :rack }
-
-# No idea why we need this but without it response_code is not always recognized
-Webrat::Methods.delegate_to_session :response_code, :response_body
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
-  conf.include Webrat::Methods
-  conf.include Webrat::Matchers
   conf.include Helpers
+  conf.include Capybara::DSL
 end
-
-module Webrat
-  # Disable logging
-  module Logging
-    def logger
-      @logger = nil
-    end
-  end
-
-  # Follow redirects
-  class Session
-    def current_host
-      URI.parse(current_url).host || @custom_headers["Host"] || default_current_host
-    end
-
-    def default_current_host
-      adapter.class==Webrat::RackAdapter ? "example.org" : "www.example.com"
-    end
-  end
-end
+Capybara.default_driver = :poltergeist
