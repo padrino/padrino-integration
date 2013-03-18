@@ -44,6 +44,6 @@ group :padrino do
     puts "\e[33mUsing padrino from: #{ENV['PADRINO_PATH']}\e[0m"
     gem 'padrino', :path => ENV['PADRINO_PATH']
   else
-    gem 'padrino', :git => "git://github.com/padrino/padrino-framework.git", :branch => "super-admin"
+    gem 'padrino', :git => "git://github.com/padrino/padrino-framework.git"
   end
 end
