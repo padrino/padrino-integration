@@ -1,10 +1,10 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'rake'
 gem 'nokogiri'
 gem 'webrat'
 gem 'capybara'
-gem 'poltergeist'
+gem 'poltergeist', '~> 1.0.2'
 gem 'rspec'
 gem 'rack-test', :require => 'rack/test'
 
@@ -30,12 +30,11 @@ group :apps do
   gem 'dm-validations'
   gem 'dm-sqlite-adapter'
   gem 'dm-types'
-  gem 'bson_ext', :require => 'mongo'
   gem 'sequel'
-  gem 'mongoid', RUBY_VERSION >= '1.9' ? '>=3.0' : '~>2.0'
+  gem 'mongoid', RUBY_VERSION >= '1.9' ? '~>3.0.0' : '~>2.0'
   gem 'SystemTimer', :require => 'system_timer', :platforms => :mri_18
+  gem 'bson_ext', :require => 'mongo'
   gem 'mongo_mapper'
-  gem 'mongomatic'
   gem 'ohm'
   gem 'mime-types',  :require => 'mime/types'
 end
