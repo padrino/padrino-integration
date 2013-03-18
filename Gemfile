@@ -4,7 +4,7 @@ gem 'rake'
 gem 'nokogiri'
 gem 'webrat'
 gem 'capybara'
-gem 'poltergeist'#, '~> 1.0.2'
+gem 'poltergeist', '~> 1.0.2'
 gem 'rspec'
 gem 'rack-test', :require => 'rack/test'
 
