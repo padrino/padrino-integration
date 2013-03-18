@@ -4,6 +4,10 @@ rvm:
   - 1.8.7
   - 1.9.3
   - ree
+services:
+  - couchdb
+  - redis-server
+  - mongodb
 notifications:
   irc: "irc.freenode.org#padrino"
   recipients:
